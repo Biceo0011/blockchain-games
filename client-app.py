@@ -53,5 +53,49 @@ def index():
         form = NameForm()
     )    
 
+# Route for serving up the index page
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+   
+    if request.method == 'POST':
+        if form.validate() == False:
+            # validate here
+            print("NameForm didn't validate")
+        else:
+            print("Got the NameForm with " + form.playername.data )
+            writeName(multichainCli, form.playername.data)
+            sleep(5)
 
+    balances = getBalances(multichainCli)
+    return render_template(
+        'client/index.html',
+        currentname = getNameFromAddress(multichainCli, playerAddress),
+        address = playerAddress,
+        gold = balances["gold"],
+        xp = balances["xp"],
+        form = NameForm()
+    )  # Route for serving up the index page
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = NameForm()
+   
+    if request.method == 'POST':
+        if form.validate() == False:
+            # validate here
+            print("NameForm didn't validate")
+        else:
+            print("Got the NameForm with " + form.playername.data )
+            writeName(multichainCli, form.playername.data)
+            sleep(5)
+
+    balances = getBalances(multichainCli)
+    return render_template(
+        'client/index.html',
+        currentname = getNameFromAddress(multichainCli, playerAddress),
+        address = playerAddress,
+        gold = balances["gold"],
+        xp = balances["xp"],
+        form = NameForm()
+    )  
 
